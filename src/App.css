@@ -1,3 +1,8 @@
+*, *::before, *::after {
+  padding: 0;
+  margin: 0;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -9,7 +14,29 @@
   color: #61dafb;
 }
 
+.check-button {
+ grid-column: 2/3;
+ grid-row: 1/2;
+ padding: 10%;
+ align-self: center;
+ margin-left: 30%;
+ transform: scale(1.2);
+}
+
+.checked {
+  text-decoration: line-through;
+  color: red;
+}
+
+.not-checked {
+  color: #61dafb;
+}
+
 li {
   font-size: calc(8px + 2vmin);
-  color: #61dafb;
+  list-style-type: none;
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: 20fr 1fr;
+  /* text-decoration: line-through; */
 }

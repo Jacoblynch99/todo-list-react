@@ -33,7 +33,7 @@ class App extends Component {
             <input value={this.state.input} onChange={this.inputUpdate}></input>
             <button>Submit</button>
           </form>
-          <FirstComponent items={this.state.items}/>
+          <FirstComponent items={this.state.items} checkedStatus={this.state.checked}/>
         </header>
       </div>
     );
