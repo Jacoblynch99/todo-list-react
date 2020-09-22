@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import FirstComponent, { sharedIndex } from './firstComponent';
+import FirstComponent from './firstComponent';
 import Title from './titleComponent';
 import DeleteButton from './delete'
 
-
+let markedForDeletion = []
 let className = "not-checked"
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: '',
-      items: {
-        list: [],
-        checked: true
-      }
-      
+      items: []
     };
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
   }
@@ -27,39 +23,59 @@ class App extends Component {
   formSubmit = event => {
     event.preventDefault()
     this.setState({
-      items : [...this.state.items.list, this.state.input],
+      items : [...this.state.items, [this.state.input, false]],
       input: '',
     })
   }
 
   handleCheckboxChange = (index) => {
-    for (let i = 0; i < this.state.items.length; i++) {
-       if (i === index) {
-         if (this.state.checked === false) {
-           this.setState( {checked: true} )
-         } else {
-           this.setState( {checked: false} )
-         }
-
-
-       } 
-      }
-    console.log(index, this.state.checked)
+    let copyArr = [...this.state.items]
+    if (this.state.items[index][1] === false) {
+      copyArr[index][1] = true
+      markedForDeletion.push(copyArr[index])
+      
+      } else {
+      copyArr[index][1] = false
+      markedForDeletion = markedForDeletion.filter(i => i !== copyArr[index])
+      
+    }
+      console.log(...this.state.items)
+    this.setState({
+      items: [...copyArr]
+    })
+    
     // if (this.state.checked) {
     //   className="checked"
     // } else {
     //   className="not-checked"
     // }
+
+    
   }
 
   delete = event => {
-    console.log(this.state.checked)
-    if (this.state.checked === false) {
-      this.setState({ items : [...this.state.items.filter(item => item)]
-        }
-      )
-    }
+    let copyArr = [...this.state.items]
+   
+    for (let i = 0; i < copyArr.length; i++) {
+      if (copyArr[i] === markedForDeletion[i]) {
+        copyArr.splice(i, 1)
+      }
+      }
+      console.log(...copyArr)
+
+
+
+
+
+
+    this.setState({
+      items: [...copyArr]
+    })
   }
+
+  
+  // this.setState({ items : [...this.state.items.map(item => item.filter(e => e !== true))]})
+
 
   render() {
     return (
