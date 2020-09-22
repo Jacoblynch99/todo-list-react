@@ -58,10 +58,9 @@ class App extends Component {
    
     for (let i = 0; i < copyArr.length; i++) {
       if (copyArr[i] === markedForDeletion[i]) {
-        copyArr.splice(i, 1)
+          className="checked"
+        }
       }
-      }
-      console.log(...copyArr)
 
 
 

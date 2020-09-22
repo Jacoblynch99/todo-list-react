@@ -8,7 +8,7 @@ function FirstComponent(props) {
       <ul>
         {props.items.map((item, index)=>{
           
-          return <li key={index}>{props.items[index]}
+          return <li key={index} className={props.className}>{props.items[index]}
           <Checkboxes className="check-button" key={index} onClick={() => props.Change(index)}/>
           </li>
         })}
