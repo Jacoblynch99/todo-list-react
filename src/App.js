@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
-import FirstComponent from './firstComponent';
+import FirstComponent, { sharedIndex } from './firstComponent';
 import Title from './titleComponent';
+import DeleteButton from './delete'
 
+
+let className = "not-checked"
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: '',
-      items: []
+      items: {
+        list: [],
+        checked: true
+      }
+      
     };
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
   }
 
   inputUpdate = event => {
@@ -19,9 +27,38 @@ class App extends Component {
   formSubmit = event => {
     event.preventDefault()
     this.setState({
-      items : [...this.state.items, this.state.input],
-      input: ''
+      items : [...this.state.items.list, this.state.input],
+      input: '',
     })
+  }
+
+  handleCheckboxChange = (index) => {
+    for (let i = 0; i < this.state.items.length; i++) {
+       if (i === index) {
+         if (this.state.checked === false) {
+           this.setState( {checked: true} )
+         } else {
+           this.setState( {checked: false} )
+         }
+
+
+       } 
+      }
+    console.log(index, this.state.checked)
+    // if (this.state.checked) {
+    //   className="checked"
+    // } else {
+    //   className="not-checked"
+    // }
+  }
+
+  delete = event => {
+    console.log(this.state.checked)
+    if (this.state.checked === false) {
+      this.setState({ items : [...this.state.items.filter(item => item)]
+        }
+      )
+    }
   }
 
   render() {
@@ -29,11 +66,14 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <Title/>
-          <form onSubmit={this.formSubmit}>
-            <input value={this.state.input} onChange={this.inputUpdate}></input>
+          <form onSubmit={this.formSubmit.bind(this)}>
+            <input value={this.state.input} onChange={this.inputUpdate.bind(this)}></input>
             <button>Submit</button>
           </form>
-          <FirstComponent items={this.state.items} checkedStatus={this.state.checked}/>
+          <div>
+            <FirstComponent className={className} items={this.state.items} Change={(i) => this.handleCheckboxChange(i)}/>
+          </div>
+          <DeleteButton onClick={this.delete.bind(this)}/>
         </header>
       </div>
     );

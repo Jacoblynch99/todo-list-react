@@ -7,16 +7,6 @@ const Checkbox = props => (
 export let checkBool = ""
 
 class Checkboxes extends React.Component {
-
-  state = { 
-    checked: false,
-   }
-
-  handleCheckboxChange = event => {
-    this.setState({ checked: event.target.checked })
-    checkBool=this.state.checked
-  }
-  
   render() {
     return (
           <Checkbox
@@ -29,4 +19,3 @@ class Checkboxes extends React.Component {
 
 export default Checkboxes;
 
-// this.state.checked ? { checked: false } : { checked: true }
